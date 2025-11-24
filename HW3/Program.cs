@@ -67,8 +67,8 @@ namespace HW3
             Console.Write("New value :");
             int newvalue=int.Parse(Console.ReadLine());
             Console.WriteLine();
-            
-                        //without recursion
+
+            //without recursion
             //for (int ni = -1; ni <=1; ni++)
             //    for (int nj = -1; nj <=1; nj++)
             //    { ChangeNeighborsOutRecursion(arr, starti+ni,startj+nj,oldval,newvalue); }
@@ -76,7 +76,7 @@ namespace HW3
 
             //with recursion
 
-            ChangeNeighborsOutRecursion(arr, starti, startj, oldval, newvalue);
+            ChangeNeighborsWithRecursion(arr, starti, startj, oldval, newvalue);
             PrintArray(arr);
 
 
@@ -149,22 +149,7 @@ namespace HW3
             ChangeNeighborsWithRecursion( arr, row+1, col+1,  oldvalue, newval);
             
             
-        }
-        static void ChangeNeighborsOutRecursion(int[,] arr, int row,  int col, int oldvalue, int newval)
-        {
-            int maxi = arr.GetLength(0) - 1;
-            int maxj = arr.GetLength(1) - 1;
-
-
-            if (row  < 0 || row  > maxi || col  < 0 || col  > maxj)
-            { return; }
-            if (arr[row, col] != oldvalue)
-            { return; }
-
-             arr[row, col]  = newval; 
-            
-        }
-        
+        }        
 
         static int[] GetScoresArrFromString(string scorestxt)
         {
