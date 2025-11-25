@@ -35,22 +35,15 @@ namespace HW3
             //newValue և բոլոր այն հարևան կետերում, որոնք ունեն նույն հին արժեքը (վեր, վար, ձախ, աջ):(Սա չի նշանակում միայն տրված կոորդինատի հարևանի, այլ նաև հարևանի հարևանների
             //և այդպես շարունակ, քանի դեռ տրված կետում հին արժեք ունեն նաև հարևանները) Անհրաժեշտ է այն լուծել երկու տարբերակով 1. Առանց ռեկուսիա 1. Ռեկուսիա
 
-            int[,] arr = new int[4, 5] { { 1, 1, 1, 2, 2 },  
-                                         { 1, 1, 0, 2, 2},
+            int[,] arr = new int[4, 5] { { 1, 1, 1, 1, 2 },  
+                                         { 1, 0, 1, 2, 2},
                                          { 1, 0, 0, 2, 2},
-                                         { 2, 2, 2, 2, 2}
+                                         { 2, 1, 2, 2, 2}
                                         };
 
                         
-            for (int i = 0; i < arr.GetLength(0); i++)
-            {
-                for (int j = 0; j < arr.GetLength(1); j++)
-                {
-                    Console.Write($"{arr[i, j]} '\t'");
-                }
-                Console.WriteLine();
-            }
-            //PrintArray(arr);
+           
+            PrintArray(arr);
             Console.Write("Start X :");
             int starti=int.Parse(Console.ReadLine());
             Console.WriteLine();
@@ -65,18 +58,15 @@ namespace HW3
             Console.WriteLine();
             
             Console.Write("New value :");
-            int newvalue=int.Parse(Console.ReadLine());
+            int newval=int.Parse(Console.ReadLine());
             Console.WriteLine();
 
             //without recursion
-            //for (int ni = -1; ni <=1; ni++)
-            //    for (int nj = -1; nj <=1; nj++)
-            //    { ChangeNeighborsOutRecursion(arr, starti+ni,startj+nj,oldval,newvalue); }
-            //PrintArray(arr);
-
+            ChangeNeighborsOutRecursion(arr, starti , startj , oldval, newval);
+                      
             //with recursion
 
-            ChangeNeighborsWithRecursion(arr, starti, startj, oldval, newvalue);
+            //ChangeNeighborsWithRecursion(arr, starti, startj, oldval, newval);
             PrintArray(arr);
 
 
@@ -124,7 +114,60 @@ namespace HW3
 
         }
 
-        static void ChangeNeighborsWithRecursion(int[,] arr, int row, int col, int oldvalue, int newval)
+        static void ChangeNeighborsWithRecursion(int[,] arr, int row, int col, int oldvalue, int newvalue)
+        {
+            int maxi = arr.GetLength(0) - 1;
+            int maxj = arr.GetLength(1) - 1;
+
+
+            if (row < 0 || row > maxi || col < 0 || col > maxj)
+            { return; }
+            if (arr[row, col] != oldvalue)
+            { return; }
+
+            arr[row, col] = newvalue;
+            
+            ChangeNeighborsWithRecursion( arr, row-1, col-1,  oldvalue, newvalue);
+            ChangeNeighborsWithRecursion( arr, row-1, col,    oldvalue, newvalue);
+            ChangeNeighborsWithRecursion( arr, row-1, col + 1,oldvalue, newvalue);
+
+            ChangeNeighborsWithRecursion( arr, row  , col-1,  oldvalue, newvalue);
+            ChangeNeighborsWithRecursion( arr, row,   col + 1,oldvalue, newvalue);
+
+            ChangeNeighborsWithRecursion( arr, row+1, col-1,  oldvalue, newvalue);
+            ChangeNeighborsWithRecursion( arr, row+1, col,    oldvalue, newvalue);
+            ChangeNeighborsWithRecursion( arr, row+1, col+1,  oldvalue, newvalue);
+            
+            
+        }
+        static void ChangeOutRecursion(int[,] arr, int row, int col, int oldvalue, int newvalue)
+        {
+            int maxi = arr.GetLength(0) - row;
+            int maxj = arr.GetLength(1) - col;
+
+            for (int ni = -1; ni < maxi; ni++)
+            {
+                for (int nj = -1; nj <= maxj; nj++)
+                {
+                    if (row + ni < 0 || row + ni > maxi || col + nj < 0 || col + nj > maxj)
+                    { break; }
+                    if (arr[row + ni, row + nj] == oldvalue)
+                    { OutRecursion(arr, row + ni, col + nj, newvalue); }
+                }
+            }
+
+        }
+        static void OutRecursion(int[,] arr, int row, int col,  int newval)
+        {
+            
+            Console.WriteLine($" i={row} j={col}");
+            arr[row, col] = newval;
+        }
+
+
+
+
+        static void ChangeNeighborsOutRecursion(int[,] arr, int row, int col, int oldvalue, int newval)
         {
             int maxi = arr.GetLength(0) - 1;
             int maxj = arr.GetLength(1) - 1;
@@ -136,20 +179,9 @@ namespace HW3
             { return; }
 
             arr[row, col] = newval;
-            
-            ChangeNeighborsWithRecursion( arr, row-1, col-1,  oldvalue, newval);
-            ChangeNeighborsWithRecursion( arr, row-1, col,    oldvalue, newval);
-            ChangeNeighborsWithRecursion( arr, row-1, col + 1,oldvalue, newval);
 
-            ChangeNeighborsWithRecursion( arr, row  , col-1,  oldvalue, newval);
-            ChangeNeighborsWithRecursion( arr, row,   col + 1,oldvalue, newval);
-
-            ChangeNeighborsWithRecursion( arr, row+1, col-1,  oldvalue, newval);
-            ChangeNeighborsWithRecursion( arr, row+1, col,    oldvalue, newval);
-            ChangeNeighborsWithRecursion( arr, row+1, col+1,  oldvalue, newval);
             
-            
-        }        
+        }
 
         static int[] GetScoresArrFromString(string scorestxt)
         {
@@ -344,7 +376,7 @@ namespace HW3
             {
                 for (int j = 0; j < arr.GetLength(1); j++)
                 {
-                    Console.Write($"{arr[i, j]} '\t'");
+                    Console.Write($"{arr[i, j]} \t");
                 }
                 Console.WriteLine();
             }
