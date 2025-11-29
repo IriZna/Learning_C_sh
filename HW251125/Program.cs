@@ -13,7 +13,22 @@ namespace HW251125
     {
         static void Main(string[] args)
         {
+            //Տրված է string, որը բաղկացած է միայն փակագծերից՝ () { } []
+            //Գրել method՝ որը ստուգում է՝ արդյոք փակագծերը ճիշտ են բացվել և փակվել։
+            //Օրինակներ՝
+            //● "()" → true
+            //● "([])" → true
+            //● "([)]" → false
+            //● "{[()()]}" → true
+            //● "(((" → false
 
+            Console.WriteLine(StackExample("([])"));
+            Console.WriteLine(StackExample("([)]"));
+            Console.WriteLine(StackExample("((()"));
+            Console.WriteLine(StackExample("((("));
+            Console.WriteLine(StackExample("{[()()]}"));
+
+            //-------------------Hw251125
             Message message;
             
             message = new ErrorMessage();
@@ -42,6 +57,32 @@ namespace HW251125
                 animal.Speak();
             }
             
+        }
+        public static bool StackExample(string str)
+        {
+
+            char[] chars = str.ToCharArray();
+
+            char[] stack = new char[chars.Length];
+            stack[0] = chars[0];
+            int j = 1;
+            int k = 0;
+            if ((char)stack[0] != 91 && (char)stack[0] != 40 && (char)stack[0] != 123) { return false; }
+
+            for (int i = 1; i < chars.Length; i++)
+            {
+                if ((char)chars[i] == 91 || (char)chars[i] == 40 || (char)chars[i] == 123)
+                {
+                    stack[j] = chars[i];
+                    j++; continue;
+                }
+                char lastcode = (char)stack[j - 1 - k];
+                if ((int)chars[i] > (int)lastcode + 2 && (int)chars[i] > (int)lastcode + 1) { return false;}
+               
+                k++;
+            }
+            if (k != j)  {return false; }
+            return true;
         }
     }
 

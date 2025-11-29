@@ -9,6 +9,6 @@ namespace HW251125
     public class Dog : Animal
     {
         public Dog(string name) : base(name) { }
-        public override void Speak() => Console.WriteLine($"{Name} Woof!");
+        public override void Speak() => Console.WriteLine($"Dog {Name} - Woof!");
     }
 }
