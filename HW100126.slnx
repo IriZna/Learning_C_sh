@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="HW100126/HW100126.csproj" Id="9f02ff12-6e73-4b4a-aa8a-99f4f14bee98" />
+  <Project Path="Task2/Task2.csproj" Id="cc8da4ed-55de-43aa-bb58-fcbcccef7f92" />
+  <Project Path="Task3/Task3.csproj" Id="4405652b-0e5c-4ae8-bf88-1fb01a312759" />
 </Solution>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,67 +19,26 @@ namespace HW100126
         }
         static void Main(string[] args)
         {
-           
-            var path = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent.FullName + "\\Logs";
-            var fileName = "app.log";
-            var pathFile = (path +"\\"+ fileName);
-            
-            //Console.WriteLine(Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent);
-            //Console.WriteLine($"Directory Exists: {Directory.Exists(path)}");
-            
-            Directory.CreateDirectory(path);
-            
-            
-            Console.WriteLine(Path.GetFullPath(path));
-            var content = " The recording of information into the log file has begun.";
-            if (File.Exists(pathFile)) 
-            {
-                using (var fs = new FileStream(pathFile, FileMode.Append, FileAccess.Write))
-                using (var sw = new StreamWriter(fs, Encoding.UTF8))
-                { sw.WriteLine($"{DateTime.Now} {content}"); }
-            }
-            else
-            {
-                using (var fs = new FileStream(pathFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                using (var sw = new StreamWriter(fs, Encoding.UTF8))
-                { sw.WriteLine($"{DateTime.Now} {content}"); }
-            }
- 
+             
             Console.WriteLine("Enter a number: ");
-
             string input = Console.ReadLine();
-            Console.WriteLine(input);
-
+           
             try
             {
                 TenFoldValue(input);
             }
             catch (MyException ex)
             {
-                
-                using (var fs = new FileStream(pathFile, FileMode.Append, FileAccess.Write))
-                using (var sw = new StreamWriter(fs, Encoding.UTF8))
-                { sw.WriteLine($"{DateTime.Now}  {ex.Message}"); }
-
-               // Console.WriteLine(ex.Message);
+                Console.WriteLine( ex.Message);
             }
-
             finally
             {
-                using (var fs = new FileStream(pathFile, FileMode.Append, FileAccess.Write))
-                using (var sw = new StreamWriter(fs, Encoding.UTF8))
-                { sw.WriteLine($"{DateTime.Now}  Process completed"); }
-                Console.WriteLine($"The log file is located {pathFile} ");
+                Console.WriteLine("Process completed");
             }
-
-
-            using (var sr = new StreamReader(pathFile, Encoding.UTF8))
-            {
-                string ftext=sr.ReadToEnd();
-                Console.WriteLine(ftext);
-            }
+            Console.WriteLine("Finish");
 
         }
+        
         static void TenFoldValue(string input)
         {
             try
@@ -88,7 +48,7 @@ namespace HW100126
             }
             catch (FormatException ex)
             {
-                throw new MyException($" Input string was not in a correct format, Pls,enter a number. {ex}");
+                throw new MyException($" Input string was not in a correct format, Pls,enter a number. ");
 
             }
             catch (OverflowException ex)
@@ -103,5 +63,6 @@ namespace HW100126
             }
         }
 
-        }
+
+     }   
 }
