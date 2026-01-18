@@ -13,7 +13,7 @@ namespace Task2
         {
             var path = "Logs";
             var fileName = "app.log";
-            var pathFile = (path + "\\" + fileName);
+            var pathFile = Path.Combine(path , fileName);
 
             Directory.CreateDirectory(path);
 
