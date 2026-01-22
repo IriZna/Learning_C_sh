@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../ValidationUsageConsoleApp/ValidationUsageConsoleApp.csproj" />
+  <Project Path="../ValidatorCustom-Lib/ValidatorCustom-Lib.csproj" />
+</Solution>
