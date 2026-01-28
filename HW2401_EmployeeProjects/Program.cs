@@ -112,7 +112,7 @@ namespace HW2401_EmployeeProjects
                 
 
             };
-
+            //average by active employees
             var reportDepart = from d in departments
                                join e in employees on d.Id equals e.DepartmentId
                                where e.isActive == true
@@ -142,6 +142,7 @@ namespace HW2401_EmployeeProjects
                                                           .ToList()
 
                                };
+            //average by all employees
 
             var reportDepart1 = from d in departments
                                let empDep = (from e in employees
