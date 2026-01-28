@@ -40,7 +40,7 @@ namespace HW2401_CliOrdersReport
     {
         static void Main(string[] args)
         {
-            var customers = new Customer[]
+            var customers = new List<Customer>
             {
                new Customer { Id = 1,Name="Ani" },
                new Customer { Id = 2,Name="Aram" },
@@ -50,7 +50,7 @@ namespace HW2401_CliOrdersReport
                new Customer { Id = 6,Name="Nobody" }
             };
 
-            var orders = new Order[]
+            var orders = new List<Order>
             {
                
                 new Order { Id = 1,CustomerId=1,OrderDate=DateTime.Now,IsCompleted=false,TotalAmount=25000M},
@@ -77,7 +77,7 @@ namespace HW2401_CliOrdersReport
             var reportCli = (from c in customers
                             join o in orders on c.Id equals o.CustomerId
                             where o.IsCompleted == true
-                            //.Where(x => x.IsCompleted == true) 
+                            
                             group o by new { c.Id,c.Name} into g
 
                             let cliOrders=g.ToList()
@@ -114,7 +114,7 @@ namespace HW2401_CliOrdersReport
                                 BestMonth=bestmonth                            
                               }).OrderByDescending(s=>s.TotalSpent).ThenByDescending(s=>s.LastOrderDate) ;
 
-            Console.WriteLine("Clients Report");
+            
 
             Console.WriteLine(" Analytical Report by Clients");
             
